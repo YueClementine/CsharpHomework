@@ -25,15 +25,16 @@ namespace onclass2
                 if (min > a[i])
                     min = a[i];
             }
-            int sum=0;
+            int sum=0,average=0;
             for(int i=1;i<a.Length;i++)
             {
                 sum += a[i];
+                average = sum / a.Length;
             }
             Console.WriteLine("max="+max);
             Console.WriteLine("min=" + min);
             Console.WriteLine("sum=" +sum);
-
+            Console.WriteLine("average" + average);
         }
     }
 }
