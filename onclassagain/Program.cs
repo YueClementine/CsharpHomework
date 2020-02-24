@@ -6,7 +6,7 @@ namespace onclassagain
     {
         static void Main(string[] args)
         {
-            int[] a = new int[105];
+            int[] a = new int[101];
             for (int i = 2; i < a.Length; i++)
             {
                 a[i] = 1;
