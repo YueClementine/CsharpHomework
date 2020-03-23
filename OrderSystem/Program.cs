@@ -7,13 +7,16 @@ namespace OrderSystem
 {
     public class Order
     {
-    
+
         public string Name { get; set; }
         public string Id { get; set; }
         public string Client { get; set; }
-        
-        public int Bill { get; set; }
 
+        public int Bill { get; set; }
+        public Order()
+        {
+
+        }
         public Order(int bi,string a, string b,string c)
         {
             Bill = bi;
@@ -41,7 +44,7 @@ namespace OrderSystem
     {
  
     }
-    class OrderItem : Order
+    public class OrderItem : Order 
     {
         public int ItemId { get; set; }
 
@@ -52,7 +55,10 @@ namespace OrderSystem
             item = i;
         }
 
-   
+        public OrderItem()
+        {
+
+        }
 
         public override string ToString()
         {
@@ -82,21 +88,31 @@ namespace OrderSystem
 
         static void Main(string[] args)
         {
+
             OrderService orderService = new OrderService();
             Order order=new Order(bi,a,b,c);
             OrderItem orderItem = new OrderItem(bi, a, b, c, i);
-            OrderItem o1= new OrderItem(103, "001", "order No.1", "john", "milk");
-            OrderItem o2 = new OrderItem(16500, "002", "order No.2", "mike", "PC");
-            OrderItem o3 = new OrderItem(87, "003", "order No.3", "jojo", "pencil");
-            OrderItem o4 = new OrderItem(22, "004", "order No.4", "tom", "cup");
+            Order Order1 = new Order(103, "001", "order No.1", "john");
+            Order Order2 = new Order(16500, "002", "order No.2", "mike");
+            Order Order3 = new Order(87, "003", "order No.3", "jojo");
+            Order Order4 = new Order(22, "004", "order No.4", "tom");
+           OrderItem I1= new OrderItem(103, "001", "order No.1", "john", "milk");
+            OrderItem I2 = new OrderItem(16500, "002", "order No.2", "mike", "PC");
+            OrderItem I3 = new OrderItem(87, "003", "order No.3", "jojo", "pencil");
+            OrderItem I4 = new OrderItem(22, "004", "order No.4", "tom", "cup");
 
-            OrderItem order1 = new OrderItem(103, "001", "order No.1", "john", "milk");
-           
-                orderService.Add(o1);
-                orderService.Add(order1);
-                orderService.Add(o2);
-                orderService.Add(o3);
-                orderService.Add(o4);
+            OrderItem Item1 = new OrderItem(103, "001", "order No.1", "john", "milk");
+
+            orderService.Add_order(Order1);
+            orderService.Add_order(Order2);
+            orderService.Add_order(Order3);
+            orderService.Add_order(Order4);
+
+            orderService.Add(I1);
+                orderService.Add(Item1);
+                orderService.Add(I2);
+                orderService.Add(I3);
+                orderService.Add(I4);
 
      
             var query = from o in orderService.OrderItemList
@@ -109,7 +125,8 @@ namespace OrderSystem
                 Console.WriteLine($"{o.Bill}\t{o.Id}\t {o.Name}\t{o.Client}");
 
             }
-
+            XmlSerializer.Export("text.xml", I1, I1.GetType());
+            XmlSerializer.Export("test.xml", Order1, Order1.GetType());
         }
     }
 }
