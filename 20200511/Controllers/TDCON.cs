@@ -11,20 +11,19 @@ namespace BlogApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TodoController : ControllerBase
+    public class TDCON : ControllerBase
     {
 
-        private readonly TodoContext todoDb;
-
-        //构造函数把TodoContext 作为参数，Asp.net core 框架可以自动注入TodoContext对象
-        public TodoController(TodoContext context)
+        private readonly Context todoDb;
+     
+        public TDCON(Context context)
         {
             this.todoDb = context;
         }
 
-        // GET: api/todo/{id}  id为路径参数
+   
         [HttpGet("{id}")]
-        public ActionResult<TodoItem> GetTodoItem(long id)
+        public ActionResult<Item> GetTodoItem(long id)
         {
             var todoItem = todoDb.TodoItems.FirstOrDefault(t => t.Id == id);
             if (todoItem == null)
@@ -33,28 +32,22 @@ namespace BlogApi.Controllers
             }
             return todoItem;
         }
-
-        // GET: api/todo
-        // GET: api/todo/pageQuery?name=课程&&isComplete=true
         [HttpGet]
-        public ActionResult<List<TodoItem>> GetTodoItems(string name, bool? isComplete)
+        public ActionResult<List<Item>> GetTodoItems(string name, bool? isComplete)
         {
             var query = buildQuery(name, isComplete);
             return query.ToList();
         }
-
-        // GET: api/todo/pageQuery?skip=5&&take=10  
-        // GET: api/todo/pageQuery?name=课程&&isComplete=true&&skip=5&&take=10
         [HttpGet("pageQuery")]
-        public ActionResult<List<TodoItem>> queryTodoItem(string name, bool? isComplete, int skip, int take)
+        public ActionResult<List<Item>> queryTodoItem(string name, bool? isComplete, int skip, int take)
         {
             var query = buildQuery(name, isComplete).Skip(skip).Take(take);
             return query.ToList();
         }
 
-        private IQueryable<TodoItem> buildQuery(string name, bool? isComplete)
+        private IQueryable<Item> buildQuery(string name, bool? isComplete)
         {
-            IQueryable<TodoItem> query = todoDb.TodoItems;
+            IQueryable<Item> query = todoDb.TodoItems;
             if (name != null)
             {
                 query = query.Where(t => t.Name.Contains(name));
@@ -65,11 +58,8 @@ namespace BlogApi.Controllers
             }
             return query;
         }
-
-
-        // POST: api/todo
         [HttpPost]
-        public ActionResult<TodoItem> PostTodoItem(TodoItem todo)
+        public ActionResult<Item> PostTodoItem(Item todo)
         {
             try
             {
@@ -82,10 +72,8 @@ namespace BlogApi.Controllers
             }
             return todo;
         }
-
-        // PUT: api/todo/{id}
         [HttpPut("{id}")]
-        public ActionResult<TodoItem> PutTodoItem(long id, TodoItem todo)
+        public ActionResult<Item> PutTodoItem(long id, Item todo)
         {
             if (id != todo.Id)
             {
@@ -104,8 +92,6 @@ namespace BlogApi.Controllers
             }
             return NoContent();
         }
-
-        // DELETE: api/todo/{id}
         [HttpDelete("{id}")]
         public ActionResult DeleteTodoItem(long id)
         {
